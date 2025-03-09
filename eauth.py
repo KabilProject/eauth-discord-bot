@@ -92,7 +92,22 @@ async def online(ctx: interactions.CommandContext):
     json_string = run_request(json.dumps(data))
     data = json.loads(json_string)
     await ctx.send(data['message'])
+    
+@bot.command(
+  name="keys_list",
+  description="Getting list of all keys"
+)
+async def keys_list(ctx: interactions.CommandContext):
+    data = {
+        'type': 'keys_list',
+        'admin_key': admin_key,
+        'discord_user_id': str(ctx.author.id),
+        'pair': generate_random_string()
+    }
 
+    json_string = run_request(json.dumps(data))
+    data = json.loads(json_string)
+    await ctx.send(data['message'])
 
 @bot.command(
   name="getvar",
