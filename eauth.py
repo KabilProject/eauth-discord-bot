@@ -8,7 +8,7 @@ import random
 # Required configuration
 bot_token = ""  # Your Discord bot token here
 admin_key = "" # Your Eauth admin key here
-application_secret = "" # Your application secret here
+application_secret = "" # Your Eauth application secret here
 
 # Advanced configuration
 invalid_request_message = "Invalid request!"
@@ -94,12 +94,12 @@ async def online(ctx: interactions.CommandContext):
     await ctx.send(data['message'])
     
 @bot.command(
-  name="keys_list",
+  name="keyslist",
   description="Getting list of all keys"
 )
-async def keys_list(ctx: interactions.CommandContext):
+async def keyslist(ctx: interactions.CommandContext):
     data = {
-        'type': 'keys_list',
+        'type': 'keyslist',
         'admin_key': admin_key,
         'mod_id': str(ctx.author.id),
         'pair': generate_random_string()
