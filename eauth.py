@@ -85,7 +85,7 @@ async def online(ctx: interactions.CommandContext):
     data = {
         'type': 'online',
         'admin_key': admin_key,
-        'discord_user_id': str(ctx.author.id),
+        'mod_id': str(ctx.author.id),
         'pair': generate_random_string()
     }
 
@@ -101,7 +101,7 @@ async def keys_list(ctx: interactions.CommandContext):
     data = {
         'type': 'keys_list',
         'admin_key': admin_key,
-        'discord_user_id': str(ctx.author.id),
+        'mod_id': str(ctx.author.id),
         'pair': generate_random_string()
     }
 
@@ -126,7 +126,7 @@ async def getvar(ctx: interactions.CommandContext, varname: str):
         'type': 'getvar',
         'varname': varname,
         'admin_key': admin_key,
-        'discord_user_id': str(ctx.author.id),
+        'mod_id': str(ctx.author.id),
         'pair': generate_random_string()
     }
 
@@ -173,7 +173,7 @@ async def genkey(ctx: interactions.CommandContext, rank: str, expire: str,
         'expire': expire,
         'length': length,
         'admin_key': admin_key,
-        'discord_user_id': str(ctx.author.id),
+        'mod_id': str(ctx.author.id),
         'pair': generate_random_string()
     }
 
@@ -198,7 +198,7 @@ async def delkey(ctx: interactions.CommandContext, key: str):
         'type': 'delkey',
         'key': key,
         'admin_key': admin_key,
-        'discord_user_id': str(ctx.author.id),
+        'mod_id': str(ctx.author.id),
         'pair': generate_random_string()
     }
 
@@ -224,7 +224,7 @@ async def delvar(ctx: interactions.CommandContext, varname: str):
         'type': 'delvar',
         'varname': varname,
         'admin_key': admin_key,
-        'discord_user_id': str(ctx.author.id),
+        'mod_id': str(ctx.author.id),
         'pair': generate_random_string()
     }
 
@@ -257,7 +257,7 @@ async def addvar(ctx: interactions.CommandContext, varname: str, varvalue: str):
         'varname': varname,
         'varvalue': varvalue,
         'admin_key': admin_key,
-        'discord_user_id': str(ctx.author.id),
+        'mod_id': str(ctx.author.id),
         'pair': generate_random_string()
     }
 
@@ -305,7 +305,7 @@ async def adduser(ctx: interactions.CommandContext, username: str,
         'rank': rank,
         'expire': expire,
         'admin_key': admin_key,
-        'discord_user_id': str(ctx.author.id),
+        'mod_id': str(ctx.author.id),
         'pair': generate_random_string()
     }
 
@@ -331,7 +331,7 @@ async def deluser(ctx: interactions.CommandContext, username: str):
         'type': 'deluser',
         'username': username,
         'admin_key': admin_key,
-        'discord_user_id': str(ctx.author.id),
+        'mod_id': str(ctx.author.id),
         'pair': generate_random_string()
     }
 
@@ -357,7 +357,7 @@ async def keydata(ctx: interactions.CommandContext, key: str):
         'type': 'keydata',
         'key': key,
         'admin_key': admin_key,
-        'discord_user_id': str(ctx.author.id),
+        'mod_id': str(ctx.author.id),
         'pair': generate_random_string()
     }
 
@@ -386,7 +386,7 @@ async def userdata(ctx: interactions.CommandContext, username: str):
         'type': 'userdata',
         'username': username,
         'admin_key': admin_key,
-        'discord_user_id': str(ctx.author.id),
+        'mod_id': str(ctx.author.id),
         'pair': generate_random_string()
     }
 
@@ -396,6 +396,32 @@ async def userdata(ctx: interactions.CommandContext, username: str):
     if (message == "success"):
         message = "- Username: " + username + "\n- Rank: " + data['rank'] + "\n- Create Date: " + data['create_date'] + "\n- Last Login Date: " + data['last_login_date'] + "\n- Expire Date: " + data['expire_date'] + "\n- HWID: " + data['hwid']
     await ctx.send(message)
+
+
+@bot.command(
+  name="banid",
+  description="Ban a HWID/IP from accessing your app",
+  options=[
+    interactions.Option(
+      name="identifier",
+      description="The HWID/IP you wish to ban",
+      type=interactions.OptionType.STRING,
+      required=True,
+    ),
+  ],
+)
+async def banid(ctx: interactions.CommandContext, identifier: str):
+    data = {
+        'type': 'banid',
+        'id': identifier,
+        'admin_key': admin_key,
+        'mod_id': str(ctx.author.id),
+        'pair': generate_random_string()
+    }
+
+    json_string = run_request(json.dumps(data))
+    data = json.loads(json_string)
+    await ctx.send(data['message'])
 
 
 @bot.command(
@@ -415,7 +441,33 @@ async def resethwid(ctx: interactions.CommandContext, username: str):
         'type': 'resethwid',
         'username': username,
         'admin_key': admin_key,
-        'discord_user_id': str(ctx.author.id),
+        'mod_id': str(ctx.author.id),
+        'pair': generate_random_string()
+    }
+
+    json_string = run_request(json.dumps(data))
+    data = json.loads(json_string)
+    await ctx.send(data['message'])
+
+
+@bot.command(
+  name="banuser",
+  description="Ban a user IP and HWID",
+  options=[
+    interactions.Option(
+      name="username",
+      description="The user you wish to ban (username or key)",
+      type=interactions.OptionType.STRING,
+      required=True,
+    ),
+  ],
+)
+async def banuser(ctx: interactions.CommandContext, username: str):
+    data = {
+        'type': 'banuser',
+        'username': username,
+        'admin_key': admin_key,
+        'mod_id': str(ctx.author.id),
         'pair': generate_random_string()
     }
 
