@@ -15,8 +15,9 @@ Configuration
 Navigate to `eauth.py`, and fill these lines of code:
 
 ```python
-# Required configuration
-bot_token = ""  # Your Discord bot token here
-admin_key = "" # Your Eauth admin key here
-application_secret = "" # Your Eauth application secret here
+# Required Configuration
+BOT_TOKEN = "" # Your Discord bot token here
+ADMIN_KEY = "" # Your Eauth admin key here
+APP_SECRET = "" # Your Eauth application secret here
+REQUIRED_ROLE_ID = ROLEIDHERE # Your Discord Role ID Here 
 ```
